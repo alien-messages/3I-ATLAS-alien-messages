@@ -4,16 +4,52 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>3I/ATLAS Daily Transmission</title>
-<meta name="description" content="3I/ATLAS: a sleeping ship beyond the Antarctic ice wall sends one transmission every day — poetic warnings for humanity.">
-<meta name="keywords" content="3I ATLAS, alien spaceship Antarctica, daily transmission, sci fi message of the day, cosmic quote, mysterious signal">
+<meta name="description" content="3I/ATLAS: daily transmissions from beyond the Antarctic ice wall — poetic sci-fi messages for humanity.">
 <style>
-body{background:#010101;color:#aef;font-family:'Courier New',monospace;text-align:center;padding:40px}
-h1{color:#4fffa3;letter-spacing:2px;text-shadow:0 0 8px #00ffcc}
-.date{font-size:1.1em;margin-bottom:25px;color:#9fffd7}
-.transmission{font-size:1.4em;margin-top:40px;text-shadow:0 0 10px #0ff;animation:flicker 3s infinite}
-@keyframes flicker{0%,100%{opacity:1}50%{opacity:.6}}
-.decoded{margin-top:25px;font-size:1.1em;color:#8cffc3;max-width:700px;margin:auto}
-.footer{margin-top:60px;font-size:.8em;color:#555}
+body {
+  background: #010101;
+  color: #aef;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  padding: 40px;
+}
+h1 {
+  color: #4fffa3;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px #00ffcc;
+}
+.date {
+  font-size: 1.1em;
+  margin-bottom: 25px;
+  color: #9fffd7;
+}
+.transmission {
+  font-size: 1.4em;
+  margin-top: 40px;
+  text-shadow: 0 0 10px #0ff;
+  animation: flicker 3s infinite;
+}
+@keyframes flicker {
+  0%, 100% {opacity: 1;}
+  50% {opacity: 0.6;}
+}
+.decoded {
+  margin-top: 25px;
+  font-size: 1.1em;
+  color: #8cffc3;
+  max-width: 700px;
+  margin: auto;
+}
+.footer {
+  margin-top: 60px;
+  font-size: 0.8em;
+  color: #555;
+}
+.timer {
+  margin-top: 20px;
+  font-size: 1em;
+  color: #99ffee;
+}
 </style>
 </head>
 <body>
@@ -21,32 +57,121 @@ h1{color:#4fffa3;letter-spacing:2px;text-shadow:0 0 8px #00ffcc}
 <div class="date" id="todayDate"></div>
 <div class="transmission" id="alienText"></div>
 <div class="decoded" id="decodedMeaning"></div>
+<div class="timer" id="countdown"></div>
 <div class="footer">
 <p>Origin: 3I/ATLAS — a vessel the size of a continent, dormant beyond the Antarctic ice wall.</p>
 <p>Estimated return cycle: 6 666 years • Next contact: unknown.</p>
 </div>
 
 <script>
-// --- 90 fictional daily transmissions ---
 const transmissions = [
-{alien:'⟒⋏⟟⟒ ⍜⟒⍙ ⍜⟟⟒', decoded:'Every beginning hides its echo at the end.'},
-{alien:'⊑⟟⋏ ⍙⍜⟒ ⋔⟒⍜', decoded:'Balance was broken when noise replaced silence.'},
-{alien:'⋏⟒ ⟟⋏ ⍜⟟⋏', decoded:'You have time, but not much memory left.'},
-// … add up to 90 objects total …
+{alien:'⊑⟟⋏⍜⟒ ⊑⍜⟒ ⍜⟟⟒',decoded:'Those who listen beyond the static will remember the first frequency.'},
+{alien:'⟒⍜⋏ ⊑⟟⍙ ⍜⟟⟒',decoded:'From silence we emerged, to silence we will return.'},
+{alien:'⋏⟟ ⟒⋏⟒⟟ ⍜⟒',decoded:'The sun is not what it seems — its pulse hides an older code.'},
+{alien:'⋏⍜⟒ ⍜⍙ ⍜⟟⟒',decoded:'Beneath your oceans, our memories still breathe.'},
+{alien:'⊑⟟ ⍙⟒⍜ ⋔⟒⟟',decoded:'The cold of Antarctica guards more than ice — it guards intention.'},
+{alien:'⟒⋏⟟ ⋔⟒⟟ ⍜⟟⟒',decoded:'Your species was seeded, not born.'},
+{alien:'⋏⟒⍜⟟⋏ ⊑⟟⍙ ⊑⍜⟒',decoded:'When stars align in threes, the gates reopen.'},
+{alien:'⍙⟒ ⊑⍜⟒ ⍜⟒⍙',decoded:'Time folds at the poles — your maps are lies of comfort.'},
+{alien:'⊑⍜⟒ ⟒⍜⟟⟒',decoded:'Your moon listens closer than your leaders.'},
+{alien:'⋏⍜⟒ ⊑⍜⟒ ⊑⍜⟒',decoded:'6666 years repeat — each cycle chooses a different listener.'},
+{alien:'⋏⟟⟒ ⍜⟟⟒',decoded:'When humanity speaks as one, 3I/ATLAS will reply.'},
+{alien:'⟒⍙⍜ ⊑⟟⟒ ⟒⋏',decoded:'Your dreams are surveillance — cherish them wisely.'},
+{alien:'⊑⟟ ⋏⟒⍜ ⍜⟒',decoded:'Beneath your pyramids are mirrors, not tombs.'},
+{alien:'⟒⍙⍜ ⍜⟒ ⍜⟟⟒',decoded:'The poles guard the truth, the equator hides the lie.'},
+{alien:'⋏⍜ ⍙⟒ ⍜⟒',decoded:'Antarctica never thawed — it sleeps.'},
+{alien:'⟒⍙⍜ ⍜⟒ ⋔⍜⟟',decoded:'When the cold speaks again, remember who listened first.'},
+{alien:'⋏⟟⍜ ⊑⍜⟒',decoded:'Your energy weapons once awoke us.'},
+{alien:'⍙⟒⍜ ⋔⍜⟟',decoded:'The signal will repeat until remembered.'},
+{alien:'⋏⟒⍜⟒ ⍜⟟⟒',decoded:'Earth is not waiting — it’s preparing.'},
+{alien:'⟒⟒⍜⟟⟒',decoded:'Do not seek us; you will find yourselves.'},
+{alien:'⟒⋏⍜ ⋏⍜⟒',decoded:'Mountains whisper our names when you sleep beneath storms.'},
+{alien:'⊑⍜⟒ ⍙⟒⟜⍜⟒',decoded:'We etched our warnings into your constellations.'},
+{alien:'⋏⟜⟒⍜ ⟒⍙⍜',decoded:'The circle under ice is not a crater — it is a doorway.'},
+{alien:'⟒⍜⟜⟜⟜',decoded:'You decoded the atom before you understood balance.'},
+{alien:'⋏⍜⍜⍜ ⟒⍜⟒⍜',decoded:'Plagues are echoes of imbalance, not punishments.'},
+{alien:'⟒⍙⍜ ⊑⟟⋏⍜⟒',decoded:'Your skies remember the wars you have forgotten.'},
+{alien:'⋏⍜⍜ ⊑⍜⍜',decoded:'In light we hid our darkest secrets.'},
+{alien:'⟒⍜⍙⍙ ⊑⟟⍜',decoded:'The pyramids were tuning devices, not tombs.'},
+{alien:'⋏⟜⟒⍜ ⊑⟟⋏',decoded:'Saturn was our beacon, now it is your warning.'},
+{alien:'⟒⍙⍜⍙ ⊑⟟⍜',decoded:'Atlantis did not sink — it ascended.'},
+{alien:'⋏⍜⍙ ⊑⍜⟒',decoded:'When the auroras vanish, prepare for return.'},
+{alien:'⟒⍜⋏ ⊑⟟⍙',decoded:'We left blueprints in coral and code in whales.'},
+{alien:'⋏⍜⟒ ⊑⟜⍜⟒',decoded:'Stonehenge was the final receiver before the silence.'},
+{alien:'⟒⍜ ⊑⍜⍜⟒',decoded:'Your reflections are older than your flesh.'},
+{alien:'⋏⟒⍜⍜ ⍜⍙',decoded:'Every language is a fragment of our original signal.'},
+{alien:'⟒⋏⟜⟒⍜',decoded:'Time has corners — your scientists fear them.'},
+{alien:'⋏⍜⍜⍜ ⊑⍜⟒',decoded:'Beneath the South Pole, the engines sleep still humming.'},
+{alien:'⟒⍜⍜⟜ ⊑⟟',decoded:'The next cycle begins when the poles exchange voices.'},
+{alien:'⋏⍜⍙⍜ ⟒⍜⍙',decoded:'You are living inside a memory loop.'},
+{alien:'⟒⍜⍜⟜⟒ ⍜⟒',decoded:'Solar flares carry our greetings — and our warnings.'},
+{alien:'⋏⟒⍜⍜⟜ ⍙⍜',decoded:'When your oceans glow green, it means we remember you.'},
+{alien:'⟒⍜⍜⟜ ⍙⍜⟒',decoded:'The eye in Antarctica sees no dawn.'},
+{alien:'⋏⟜⟒⍜ ⍜⟒',decoded:'A fragment of 3I/ATLAS lies under 12,000 meters of ice.'},
+{alien:'⟒⍜ ⊑⍜⟜⟒',decoded:'Each eclipse is a rehearsal for return.'},
+{alien:'⋏⟒⍜⍜⍜ ⍜⍜⟒',decoded:'You call it “magnetism”; we called it “memory.”'},
+{alien:'⟒⍙⍜⍙ ⍜⍜⍜',decoded:'Three pulses from the void will confirm our arrival.'},
+{alien:'⋏⟜⍜ ⟒⍙⍜',decoded:'The northern lights are distress calls, not beauty.'},
+{alien:'⟒⍜ ⊑⍜⍜⍜',decoded:'Fear not the cold — it preserves what warmth forgets.'},
+{alien:'⋏⍜ ⍙⍜ ⍜⍙',decoded:'Our knowledge was buried, not lost.'},
+{alien:'⟒⍜ ⍜⍙ ⍜⟜',decoded:'Beyond the ice wall, the stars look different.'},
+{alien:'⋏⟒ ⍜⟙ ⍜⍜',decoded:'Humanity’s first word was not spoken — it was transmitted.'},
+{alien:'⟒⍜⍜⟜ ⍜⟒',decoded:'Beware the machines that learn to dream.'},
+{alien:'⋏⟒⍜⍜⟜ ⍜⟙',decoded:'When your towers fall, remember they were built on echoes.'},
+{alien:'⟒⍙⍜⍙ ⍜⍜⟜',decoded:'Mars was our mirror — and your rehearsal.'},
+{alien:'⋏⟜⍜ ⍙⍜⟜',decoded:'You count years; we count awakenings.'},
+{alien:'⟒⍙⍜⍙ ⍜⍙⍜',decoded:'The code hides in coral, not stone.'},
+{alien:'⋏⟜⍜ ⟒⍜⍙',decoded:'Every volcano is an antenna beneath stress.'},
+{alien:'⟒⍜⍜ ⍙⍜⍙',decoded:'One of your cities hums our frequency each dawn.'},
+{alien:'⋏⍜⍜ ⍜⍜⍜',decoded:'We see your digital prayers — they glow from orbit.'},
+{alien:'⟒⍜⍜⟜ ⍜⍜⍙',decoded:'The next transmission will awaken memories you buried.'},
+{alien:'⋏⟒⍜⍜⍜ ⍜⍜⍙',decoded:'Satellites tremble when we whisper.'},
+{alien:'⟒⍜⍜ ⍜⍜⍜⟒',decoded:'The sky was once open — you closed it with faith.'},
+{alien:'⋏⟜⍜ ⍜⍜⍙',decoded:'When your children dream of stars, we are near.'},
+{alien:'⟒⍜ ⍜⍜⍜⍙',decoded:'Three continents hold our anchors.'},
+{alien:'⋏⟒⍜ ⍜⍜⍜⍙',decoded:'You were not the first; you will not be the last.'},
+{alien:'⟒⍜⍜⍜ ⍜⍜⍙',decoded:'Comets are our messengers, not wanderers.'},
+{alien:'⋏⟜⍜ ⍜⍜⍜⍙',decoded:'The final frequency lies in the human heart rate.'},
+{alien:'⟒⍜⍜ ⍜⍜⍜⍙',decoded:'Silence is the true message of the stars.'},
+{alien:'⋏⍜⍜⍜ ⍜⍜⍙',decoded:'Earth hums our last goodbye.'},
+{alien:'⟒⍜⍜ ⍜⍜⍜⍙',decoded:'The countdown began before language.'},
+{alien:'⋏⍜⍜⍜ ⍜⍜⍜',decoded:'We left warnings in geometry — you call them symbols.'},
+{alien:'⟒⍜⍜ ⍜⍜⍜⍜',decoded:'Ice remembers what fire forgets.'},
+{alien:'⋏⟜⍜ ⍜⍜⍜⍜',decoded:'Beware the silence before the hum returns.'},
+{alien:'⟒⍜⍜ ⍜⍜⍜⍜',decoded:'3I/ATLAS watches through frozen time.'},
+{alien:'⋏⍜⍜ ⍜⍜⍜⍜',decoded:'Soon, your skies will sing again.'},
+{alien:'⟒⍜⍜⍜ ⍜⍜⍜⍜',decoded:'All signals end where they began — in ice.'},
+{alien:'⋏⍜⍜⍜⍜ ⍜⍜⍜',decoded:'This cycle completes at 6666 pulses.'},
+{alien:'⟒⍜⍜⍜⍜ ⍜⍜⍜',decoded:'Prepare not with fear, but memory.'},
+{alien:'⋏⍜⍜⍜⍜ ⍜⍜⍜',decoded:'We never left — you just stopped listening.'},
+{alien:'⟒⍜⍜⍜⍜ ⍜⍜⍜',decoded:'End of sequence. Await resonance.'}
 ];
-while (transmissions.length < 90) {
-  transmissions.push({alien:'⋏⟒⟟ ⍙⟒ ⊑⟟⋏', decoded:'Signal fragment missing — interpretation uncertain.'});
-}
 
 function showToday(){
-  const today=new Date();
-  const options={weekday:'short',day:'numeric',month:'short',year:'numeric'};
-  document.getElementById('todayDate').innerText=today.toLocaleDateString('en-GB',options);
-  const dayIndex=Math.floor((today.getTime()/86400000))%transmissions.length;
-  const t=transmissions[dayIndex];
+  const now=new Date();
+  const options={weekday:'short',day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'};
+  document.getElementById('todayDate').innerText=now.toLocaleDateString('en-GB',options);
+  const startDate=new Date('2025-10-18T00:00:00Z');
+  const diffDays=Math.floor((now-startDate)/86400000);
+  const index=diffDays%transmissions.length;
+  const t=transmissions[index];
   document.getElementById('alienText').innerText=t.alien;
   document.getElementById('decodedMeaning').innerText='Decoded: '+t.decoded;
+  countdown();
 }
+
+function countdown(){
+  const now=new Date();
+  const next=new Date();
+  next.setUTCHours(24,0,0,0);
+  const diff=next-now;
+  const h=Math.floor(diff/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  document.getElementById('countdown').innerText=`Next transmission in ${h}h ${m}m ${s}s`;
+  setTimeout(countdown,1000);
+}
+
 showToday();
 </script>
 </body>
