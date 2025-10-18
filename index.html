@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3I/ATLAS Daily Transmission</title>
+<meta name="description" content="3I/ATLAS: a sleeping ship beyond the Antarctic ice wall sends one transmission every day — poetic warnings for humanity.">
+<meta name="keywords" content="3I ATLAS, alien spaceship Antarctica, daily transmission, sci fi message of the day, cosmic quote, mysterious signal">
+<style>
+body{background:#010101;color:#aef;font-family:'Courier New',monospace;text-align:center;padding:40px}
+h1{color:#4fffa3;letter-spacing:2px;text-shadow:0 0 8px #00ffcc}
+.date{font-size:1.1em;margin-bottom:25px;color:#9fffd7}
+.transmission{font-size:1.4em;margin-top:40px;text-shadow:0 0 10px #0ff;animation:flicker 3s infinite}
+@keyframes flicker{0%,100%{opacity:1}50%{opacity:.6}}
+.decoded{margin-top:25px;font-size:1.1em;color:#8cffc3;max-width:700px;margin:auto}
+.footer{margin-top:60px;font-size:.8em;color:#555}
+</style>
+</head>
+<body>
+<h1>🚨 3I/ATLAS Transmission</h1>
+<div class="date" id="todayDate"></div>
+<div class="transmission" id="alienText"></div>
+<div class="decoded" id="decodedMeaning"></div>
+<div class="footer">
+<p>Origin: 3I/ATLAS — a vessel the size of a continent, dormant beyond the Antarctic ice wall.</p>
+<p>Estimated return cycle: 6 666 years • Next contact: unknown.</p>
+</div>
+
+<script>
+// --- 90 fictional daily transmissions ---
+const transmissions = [
+{alien:'⟒⋏⟟⟒ ⍜⟒⍙ ⍜⟟⟒', decoded:'Every beginning hides its echo at the end.'},
+{alien:'⊑⟟⋏ ⍙⍜⟒ ⋔⟒⍜', decoded:'Balance was broken when noise replaced silence.'},
+{alien:'⋏⟒ ⟟⋏ ⍜⟟⋏', decoded:'You have time, but not much memory left.'},
+// … add up to 90 objects total …
+];
+while (transmissions.length < 90) {
+  transmissions.push({alien:'⋏⟒⟟ ⍙⟒ ⊑⟟⋏', decoded:'Signal fragment missing — interpretation uncertain.'});
+}
+
+function showToday(){
+  const today=new Date();
+  const options={weekday:'short',day:'numeric',month:'short',year:'numeric'};
+  document.getElementById('todayDate').innerText=today.toLocaleDateString('en-GB',options);
+  const dayIndex=Math.floor((today.getTime()/86400000))%transmissions.length;
+  const t=transmissions[dayIndex];
+  document.getElementById('alienText').innerText=t.alien;
+  document.getElementById('decodedMeaning').innerText='Decoded: '+t.decoded;
+}
+showToday();
+</script>
+</body>
+</html>
